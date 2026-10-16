@@ -13,14 +13,18 @@ public class UserService {
 
     public UserService() {
         User u1 = new User(1, "admin", "123123", true);
-        User u2 = new User(1, "admin2", "123123", true);
+        User u2 = new User(2, "admin2", "123123", true);
 
         userList.add(u1);
         userList.add(u2);
     }
 
-
     public List<User> getUserList() {
         return this.userList;
+    }
+
+    public boolean deleteUser(Integer id) {
+        if (id == null) return false;
+        return userList.removeIf(user -> id.equals(user.getId()));
     }
 }

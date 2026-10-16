@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -27,7 +29,20 @@ public class UserController {
     @GetMapping()
     public String userPage(Model model) {
         model.addAttribute("userList", us.getUserList());
-        model.addAttribute("myName", "Phước");
         return "user";
+    }
+
+    // Xóa user theo PathVariable: /users/delete/{id}
+    @GetMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") Integer id) {
+        us.deleteUser(id);
+        return "redirect:/users";
+    }
+
+    // Xóa user theo RequestParam: /users/delete?id={id}
+    @GetMapping("/delete")
+    public String deleteUserByParam(@RequestParam("id") Integer id) {
+        us.deleteUser(id);
+        return "redirect:/users";
     }
 }

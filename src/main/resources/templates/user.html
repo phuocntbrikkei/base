@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Management</title>
+    <title>Quản lý người dùng</title>
     <style>
         :root {
             --primary-color: #4a90e2;
@@ -100,6 +100,8 @@
             cursor: pointer;
             font-size: 0.85rem;
             transition: opacity 0.3s;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .btn:hover {
@@ -119,8 +121,6 @@
 </head>
 
 <body>
-    <h1 th:text="${myName}"></h1>
-
     <div class="table-container">
         <div class="table-header">
             Danh sách Người dùng
@@ -137,18 +137,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="user: ${userList}">
-                    <td th:text="${userStat.index + 1}"></td>
-                    <td th:text="${user.id}">    </td>
-                    <td th:text="${user.username}">    </td>
+                <tr th:each="user, userStat: ${userList}">
+                    <td th:text="${userStat.index + 1}">1</td>
+                    <td th:text="${user.id}">1</td>
+                    <td th:text="${user.username}">admin</td>
                     <td>********</td>
                     <td>
                         <span th:if="${user.active}" class="status active">Hoạt động</span>
                         <span th:unless="${user.active}" class="status inactive">Bị khóa</span>
                     </td>
                     <td>
-                        <button class="btn btn-edit">Sửa</button>
-                        <button class="btn btn-delete">Xóa</button>
+                        <button class="btn btn-edit" type="button">Sửa</button>
+                        <a th:href="@{/users/delete/{a}(a=${user.id})}"
+                           class="btn btn-delete" 
+                           onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?');">Xóa</a>
                     </td>
                 </tr>
             </tbody>

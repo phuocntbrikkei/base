@@ -128,6 +128,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>STT</th>
                     <th>ID</th>
                     <th>Tên tài khoản (Username)</th>
                     <th>Mật khẩu</th>
@@ -136,7 +137,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="user : ${userList}">
+                <tr th:each="user: ${userList}">
+                    <td th:text="${userStat.index + 1}"></td>
                     <td th:text="${user.id}">    </td>
                     <td th:text="${user.username}">    </td>
                     <td>********</td>

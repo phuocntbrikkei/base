@@ -25,7 +25,7 @@
 
         .table-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 950px;
             background: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -48,8 +48,9 @@
 
         th,
         td {
-            padding: 15px 20px;
+            padding: 12px 18px;
             text-align: left;
+            vertical-align: middle;
         }
 
         th {
@@ -74,6 +75,17 @@
             background-color: #f1f5f9;
         }
 
+        /* Avatar */
+        .user-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            display: block;
+        }
+
         /* Status Badges */
         .status {
             padding: 5px 10px;
@@ -94,7 +106,7 @@
 
         /* Action buttons */
         .btn {
-            padding: 6px 12px;
+            padding: 6px 14px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -102,15 +114,17 @@
             transition: opacity 0.3s;
             text-decoration: none;
             display: inline-block;
+            font-weight: 500;
         }
 
         .btn:hover {
-            opacity: 0.8;
+            opacity: 0.85;
         }
 
         .btn-edit {
             background-color: #ffc107;
             color: #000;
+            margin-right: 6px;
         }
 
         .btn-delete {
@@ -130,6 +144,7 @@
                 <tr>
                     <th>STT</th>
                     <th>ID</th>
+                    <th>Avatar</th>
                     <th>Tên tài khoản (Username)</th>
                     <th>Mật khẩu</th>
                     <th>Trạng thái</th>
@@ -140,6 +155,11 @@
                 <tr th:each="user, userStat: ${userList}">
                     <td th:text="${userStat.index + 1}">1</td>
                     <td th:text="${user.id}">1</td>
+                    <td>
+                        <img th:src="${user.avatar != null and !user.avatar.isEmpty() ? user.avatar : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSzkzzbCAzkVsfPP_jfIGUBMR5K64qW6FiK4-03YBv2ou2Spx7NC8p12MpRjAjDLBKjt4_D626ve7zwQWllqi1YB1jj-kZiPOdoe7jcQ&s=10'}" 
+                             alt="Avatar" 
+                             class="user-avatar" />
+                    </td>
                     <td th:text="${user.username}">admin</td>
                     <td>********</td>
                     <td>
@@ -147,8 +167,8 @@
                         <span th:unless="${user.active}" class="status inactive">Bị khóa</span>
                     </td>
                     <td>
-                        <button class="btn btn-edit" type="button">Sửa</button>
-                        <a th:href="@{/users/delete/{a}(a=${user.id})}"
+                        <a th:href="@{/users/edit/{id}(id=${user.id})}" class="btn btn-edit">Sửa</a>
+                        <a th:href="@{/users/delete/{id}(id=${user.id})}" 
                            class="btn btn-delete" 
                            onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?');">Xóa</a>
                     </td>
